@@ -1,0 +1,90 @@
+*, *::before, *::after{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: beige;
+}
+
+
+
+.intro {
+    background-color: white;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    text-align: center;
+    max-width: 100%;
+    padding: 10px 20px 10px 20px;
+    max-height: 50%;
+    border-bottom: 15px lightgray solid;
+}
+
+
+header p {
+    margin: 5px 0 20px;
+    font-size: 1rem;
+  }
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    flex-wrap: wrap;
+    max-width: 100%;
+    max-height: 60%;
+    text-align: center;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px 20px 10px 20px;
+    box-shadow: 0 0 10px 2px;
+}
+
+.answer-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    padding: 5px;
+    flex-wrap: wrap;
+    box-shadow: black;
+    cursor: pointer;
+
+}
+
+.answer-buttons button {
+    display: flex;
+    padding: 10px;
+    margin: 5px;
+    border: 10 0 10 0;
+    border-radius: 5px;
+
+}
+
+.control-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.start-button, .next-button .submit-button {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 8px 3px 5px 2px;
+    border: 10px 5px 10px 5px;
+    border-radius: 5px;
+}
+
+.submit-button:hover {
+    background-color: burlywood;
+}
+.hide {  
+    display: none;
+}
+
+
+

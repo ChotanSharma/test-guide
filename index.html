@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Quiz</title>
+    <link href="./assets/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    <!--header to appear at the beginning and give information about the quiz-->
+    <header class ="intro" id = "intro">
+        <div class = "intro-text" id = "intro-text">
+            <h2 class = "intro-text-head" id = "intro-text-head">Test Yourself</h2>
+                <p class= "intro-texr-para">Answer the three question within 60 seconds.<br> 
+                For incorrect answer 10 seconds will be deducted from total time.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="score">
+            <button class="btn-score" id="high-score">High Score</button>
+        </div>
+
+
+        <!--div for hold the question from question object-->
+        <div id="questions-container" class="hide">
+            <div class="question" id="ques">Question</div>
+            <div class="answer-buttons" id="answer-keys">
+                <button class="answer" id="a">Answer a</button>
+                <button class="answer" id="b">Answer b</button>
+                <button class="answer" id="c">Answer c</button>
+                <button class="answer" id="d">Answer d</button>
+            </div>
+
+        </div> 
+
+        <!--div for start and next  and submit buttons-->
+        <div class="control-buttons">
+
+            <button id="btn-start" class="start-button">Start Quiz</button>
+
+            <button id="btn-next" class="next-button hide">Next</button>
+
+            <button id="btn-submit" class="submit-button hide">Submit Answers</button>
+        </div>
+
+        <!--div for showing timer -->
+        <div class="timer"></div>
+
+    </main>
+    
+
+
+
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
