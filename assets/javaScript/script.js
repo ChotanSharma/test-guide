@@ -45,13 +45,12 @@ select.textContent = "Remaining time:" + timeRemain;
 
 // Timer function to countdown
 var timer =  function() {
-    if(holdTimer==0) {
+    // select the timer by class name 
+    if(timeRemain>0) {
         timeRemain--;
-        select.textContent = "Remaining time:" + timeRemain;
-        console.log(timeRemain);    
-    }
-    else(timeRemain<=0) {
-        alert("The quiz ends as you lost your time.");
+        select.textContent = "Remaining time: " + timeRemain;  
+    }else {
+        window.alert("The quiz ends as you lost your time.");
         clearInterval(holdTimer);
     };
 };
@@ -63,25 +62,29 @@ var remainingTime = function() {
 var startQuiz = function() {
     // add an event listener(click on start button) to start the uiz
     startButton.addEventListener("click", function() {
+        remainingTime();
         // add the css to hide the buttons
         startButton.classList.add("hide");
         nextButtonEl.classList.remove("hide");
         introDivEl.classList.add("hide");
         setQuestion(k);
         checkAnswer(k);
-        remainingTime();
+        
         // every time click on  next button generates the function setNextQuestions call
         nextButtonEl.addEventListener("click", function() {
             setNextQuestion();
             // increment the value of question no. k
             k++;
             // if iteration reaches last question, the option to click submit button appears
-            if (k == arrayOfQuestionData.length) {
+            /*if (k === arrayOfQuestionData.length) {
                 nextButtonEl.classList.add("hide");
                 submitButton.classList.remove("hide");
                 submitAnswers();
-            };
+            };*/
         });
+
+        submitAnswers();
+        console.log(highScore);
         
         
         
@@ -118,13 +121,13 @@ function checkAnswer(k) {
     answerClick.addEventListener("click", function(e) {
         var answer = e.target.innerHTML;
         // if answer correct, show the correct message
-        if(answer == arrayOfQuestionData[k].correctAnswer) {
+        if(answer === arrayOfQuestionData[k].correctAnswer) {
             console.log("correct answer!!!");
             answerDiv.innerHTML ="Correct Answer!!!";
         // deduct time for any wrong answer button clicks  
         } else {
             answerDiv.innerHTML ="Incorrect Answer!!!";
-            timeRemain = timeRemain - 5;
+            timeRemain = timeRemain - 10;
             
     
         }
@@ -141,7 +144,7 @@ function setNextQuestion() {
 function submitAnswers() {
     submitButton.addEventListener("click", function() {
         
-    clearInterval(timer);
+    clearInterval(holdTimer);
     // value for local storage
      var highScore = timeRemain;
     // prompt to create the key for local storage
@@ -157,6 +160,7 @@ function submitAnswers() {
 
          }
     })
+    return highScore;
 };
 
 startQuiz();
