@@ -4,6 +4,7 @@ var nextButtonEl = document.querySelector(".next-button");
 var introDivEl = document.querySelector("#intro");
 var submitButton = document.getElementById("btn-submit");
 var mainContainerEl = document.getElementById("main");
+var saveInputEl = document.getElementById("save-input");
 
 // the array of questions
 var arrayOfQuestionData = [
@@ -50,7 +51,6 @@ var timer =  function() {
         timeRemain--;
         select.textContent = "Remaining time: " + timeRemain;  
     }else {
-        window.alert("The quiz ends as you lost your time.");
         clearInterval(holdTimer);
     };
 };
@@ -76,16 +76,15 @@ var startQuiz = function() {
             // increment the value of question no. k
             k++;
             // if iteration reaches last question, the option to click submit button appears
-            /*if (k === arrayOfQuestionData.length) {
+            if (k === arrayOfQuestionData.length) {
                 nextButtonEl.classList.add("hide");
                 submitButton.classList.remove("hide");
                 submitAnswers();
-            };*/
+            };
         });
 
         submitAnswers();
-        console.log(highScore);
-        
+        save();
         
         
     })
@@ -143,8 +142,12 @@ function setNextQuestion() {
 // function to listen to the click on submit button and generate catching the high score and store it in the local storage
 function submitAnswers() {
     submitButton.addEventListener("click", function() {
-        
+    questionsContainerEl.classList.add("hide");
+    saveInputEl.classList.remove("hide");
+
     clearInterval(holdTimer);
+
+    /*
     // value for local storage
      var highScore = timeRemain;
     // prompt to create the key for local storage
@@ -156,11 +159,43 @@ function submitAnswers() {
 
     } else {
          // convert the highScore into a string value
-            localStorage.setItem(storingScore, JSON.stringify(highScore));
+            localStorage.setItem("storingScore", JSON.stringify(highScore));
 
-         }
+         }*/
     })
-    return highScore;
 };
+
+function save() {
+    var saveBtnEl = document.getElementById("save-score");
+    var inputKeyEl = document.getElementById("local-key");
+    var key = inputKeyEl.value;
+    var value = timeRemain;
+
+    saveBtnEl.addEventListener("click", ()=> {
+        if(key && timeRemain>0) {
+            localStorage.setItem(key, JSON.stringify(value));
+            location.reload();
+        
+        }
+
+    })
+
+    var highScoreEl = document.getElementById("high-score");
+    highScoreEl.addEventListener("click", ()=> {
+        for(var i = 0; i < localStorage.length; i++) {
+            var newKey = localStorage.key(i);
+            var newValue = JSON.parse(localStorage.getItem(newKey));
+            var newDivMain = document.createElement("div");
+            newDivMain.innerHTML += `${newKey}: ${newValue}`;
+
+            document.body.append(newDivMain);
+        }
+    })
+}
+
+
+function getDataFromLocal() {
+   
+}
 
 startQuiz();
