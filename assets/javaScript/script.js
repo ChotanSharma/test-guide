@@ -4,6 +4,7 @@ var nextButtonEl = document.querySelector(".next-button");
 var introDivEl = document.querySelector("#intro");
 var submitButton = document.getElementById("btn-submit");
 var mainContainerEl = document.getElementById("main");
+var saveInputEl = document.getElementById("save-input");
 
 // the array of questions
 var arrayOfQuestionData = [
@@ -45,13 +46,11 @@ select.textContent = "Remaining time:" + timeRemain;
 
 // Timer function to countdown
 var timer =  function() {
-    if(holdTimer==0) {
+    // select the timer by class name 
+    if(timeRemain>0) {
         timeRemain--;
-        select.textContent = "Remaining time:" + timeRemain;
-        console.log(timeRemain);    
-    }
-    else(timeRemain<=0) {
-        alert("The quiz ends as you lost your time.");
+        select.textContent = "Remaining time: " + timeRemain;  
+    }else {
         clearInterval(holdTimer);
     };
 };
@@ -63,26 +62,29 @@ var remainingTime = function() {
 var startQuiz = function() {
     // add an event listener(click on start button) to start the uiz
     startButton.addEventListener("click", function() {
+        remainingTime();
         // add the css to hide the buttons
         startButton.classList.add("hide");
         nextButtonEl.classList.remove("hide");
         introDivEl.classList.add("hide");
         setQuestion(k);
         checkAnswer(k);
-        remainingTime();
+        
         // every time click on  next button generates the function setNextQuestions call
         nextButtonEl.addEventListener("click", function() {
             setNextQuestion();
             // increment the value of question no. k
             k++;
             // if iteration reaches last question, the option to click submit button appears
-            if (k == arrayOfQuestionData.length) {
+            if (k === arrayOfQuestionData.length) {
                 nextButtonEl.classList.add("hide");
                 submitButton.classList.remove("hide");
                 submitAnswers();
             };
         });
-        
+
+        submitAnswers();
+        save();
         
         
     })
@@ -118,13 +120,13 @@ function checkAnswer(k) {
     answerClick.addEventListener("click", function(e) {
         var answer = e.target.innerHTML;
         // if answer correct, show the correct message
-        if(answer == arrayOfQuestionData[k].correctAnswer) {
+        if(answer === arrayOfQuestionData[k].correctAnswer) {
             console.log("correct answer!!!");
             answerDiv.innerHTML ="Correct Answer!!!";
         // deduct time for any wrong answer button clicks  
         } else {
             answerDiv.innerHTML ="Incorrect Answer!!!";
-            timeRemain = timeRemain - 5;
+            timeRemain = timeRemain - 10;
             
     
         }
@@ -140,8 +142,12 @@ function setNextQuestion() {
 // function to listen to the click on submit button and generate catching the high score and store it in the local storage
 function submitAnswers() {
     submitButton.addEventListener("click", function() {
-        
-    clearInterval(timer);
+    questionsContainerEl.classList.add("hide");
+    saveInputEl.classList.remove("hide");
+
+    clearInterval(holdTimer);
+
+    /*
     // value for local storage
      var highScore = timeRemain;
     // prompt to create the key for local storage
@@ -153,10 +159,43 @@ function submitAnswers() {
 
     } else {
          // convert the highScore into a string value
-            localStorage.setItem(storingScore, JSON.stringify(highScore));
+            localStorage.setItem("storingScore", JSON.stringify(highScore));
 
-         }
+         }*/
     })
 };
+
+function save() {
+    var saveBtnEl = document.getElementById("save-score");
+    var inputKeyEl = document.getElementById("local-key");
+    var key = inputKeyEl.value;
+    var value = timeRemain;
+
+    saveBtnEl.addEventListener("click", ()=> {
+        if(key && timeRemain>0) {
+            localStorage.setItem(key, JSON.stringify(value));
+            location.reload();
+        
+        }
+
+    })
+
+    var highScoreEl = document.getElementById("high-score");
+    highScoreEl.addEventListener("click", ()=> {
+        for(var i = 0; i < localStorage.length; i++) {
+            var newKey = localStorage.key(i);
+            var newValue = JSON.parse(localStorage.getItem(newKey));
+            var newDivMain = document.createElement("div");
+            newDivMain.innerHTML += `${newKey}: ${newValue}`;
+
+            document.body.append(newDivMain);
+        }
+    })
+}
+
+
+function getDataFromLocal() {
+   
+}
 
 startQuiz();
