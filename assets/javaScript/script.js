@@ -84,7 +84,6 @@ var startQuiz = function() {
         });
 
         submitAnswers();
-        save();
         
         
     })
@@ -147,55 +146,43 @@ function submitAnswers() {
 
     clearInterval(holdTimer);
 
-    /*
-    // value for local storage
-     var highScore = timeRemain;
-    // prompt to create the key for local storage
-    var storingScore = window.prompt("Your total score is " + highScore + " . To save your score, would you please enter your name?");
-    console.log(storingScore);
-        
-     if(!storingScore || storingScore == "") {
-            window.prompt("Sorry, fail to save your score. Your input is not valid");
+    save();
 
-    } else {
-         // convert the highScore into a string value
-            localStorage.setItem("storingScore", JSON.stringify(highScore));
-
-         }*/
-    })
+    });
 };
 
 function save() {
     var saveBtnEl = document.getElementById("save-score");
     var inputKeyEl = document.getElementById("local-key");
-    var key = inputKeyEl.value;
-    var value = timeRemain;
+    
+    
 
     saveBtnEl.addEventListener("click", ()=> {
+        var value = timeRemain;
+        var key = inputKeyEl.value;
+        console.log(key + " : " + value);
         if(key && timeRemain>0) {
             localStorage.setItem(key, JSON.stringify(value));
-            location.reload();
+            console.log( "I did");
         
         }
 
     })
-
+// looping through local storage and pull data
     var highScoreEl = document.getElementById("high-score");
     highScoreEl.addEventListener("click", ()=> {
         for(var i = 0; i < localStorage.length; i++) {
             var newKey = localStorage.key(i);
             var newValue = JSON.parse(localStorage.getItem(newKey));
             var newDivMain = document.createElement("div");
-            newDivMain.innerHTML += `${newKey}: ${newValue}`;
+            //newDivMain.innerHTML += `${newKey}: ${newValue}`;
+            newDivMain.innerHTML += newKey + " : " + newValue;
+            console.log( "I did");
 
             document.body.append(newDivMain);
         }
-    })
+    });
 }
 
-
-function getDataFromLocal() {
-   
-}
 
 startQuiz();
