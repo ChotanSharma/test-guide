@@ -1,7 +1,7 @@
 # test-guide
 ## User Story
 
-As a course-coordinator 
+As a user
 I want to assess the elementary knowledge of the enthusiastic
 so that we can make a proper course design.
 
